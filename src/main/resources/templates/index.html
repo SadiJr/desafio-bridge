@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title> Calculadora de Fatorial </title>
+   </head>
+   <body>
+      <h1> Calcular fatorial </h1>
+      <h2> Digite um número inteiro: </h2>
+      <input type = "number" min = "1" id = "num">
+      <input type="button"  onclick="submit()" value="Calcular" >
+      <h3> Fatorial: <span id = "answer"> </span> </h3>
+      
+      <h4> Histórico: </h4>
+      <ul id="history"></ul>
+      
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>          
+      <script>
+         function submit() {
+         	var num = parseInt( document.getElementById("num").value);
+         	if (isNaN(num)) {
+         		alert( " Digite um número inteiro, imbecil! " );
+         		return;
+	        }
+
+	       	$.get('http://localhost:8080/factorial/' + num,
+   				function (response) {
+   					document.getElementById("answer").innerHTML = response;
+   					var history = num + " = " + response;
+   					var node = document.createElement("LI");
+  					var textnode = document.createTextNode(history);
+  					node.appendChild(textnode);
+   					document.getElementById("history").prepend(node); 
+   				}
+   			);
+         }
+      </script>
+   </body>
+</html>
